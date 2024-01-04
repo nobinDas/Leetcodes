@@ -1,30 +1,25 @@
-import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 class Solution {
-    public int findContentChildren(int[] g, int[] s) {
-        int x = 0;
-        int y = 0;
-        Arrays.sort(g);
-        Arrays.sort(s);
-        while(x < g.length && y < s.length){
-            if(s[y] >= g[x]){
-                x++;
+    public int[] twoSum(int[] nums, int target) {
+        // Use a map to store the complement of each number and its index
+        Map<Integer, Integer> complementMap = new HashMap<>();
+
+        for (int i = 0; i < nums.length; i++) {
+            int complement = target - nums[i];
+
+            // Check if the complement is already in the map
+            if (complementMap.containsKey(complement)) {
+                // Return the indices of the two numbers that add up to the target
+                return new int[]{complementMap.get(complement), i};
             }
-            y++;
+
+            // Put the current number and its index into the map
+            complementMap.put(nums[i], i);
         }
-        System.gc();
-        return x;
-    }
-}
 
-public class Main {
-    public static void main(String[] args) {
-        int[] g = {1, 2, 3};
-        int[] s = {1, 1};
-
-        Solution solution = new Solution();
-        int result = solution.findContentChildren(g, s);
-
-        System.out.println("Number of content children: " + result);
+        // No solution found
+        return new int[]{};
     }
 }
